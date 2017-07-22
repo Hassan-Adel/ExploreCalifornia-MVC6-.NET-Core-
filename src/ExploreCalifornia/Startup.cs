@@ -23,11 +23,20 @@ namespace ExploreCalifornia
         {
             loggerFactory.AddConsole();
 
+            app.UseExceptionHandler("/error.html");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
+            app.Use(async (context, next) =>
+            {
+                if (context.Request.Path.Value.Contains("invalid"))
+                    throw new Exception("Error");
+                await next();
+            });
+
             app.UseFileServer();
         }
     }
