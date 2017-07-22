@@ -25,18 +25,22 @@ namespace ExploreCalifornia
             loggerFactory.AddConsole();
 
             // telling ASP.NET Core's configuration library about the various places that the application's configuration settings will be stored. 
+            // true for optional
             var configuration = new ConfigurationBuilder()
                 .AddEnvironmentVariables()
+                .AddJsonFile(env.ContentRootPath + "/config.json")
+                .AddJsonFile(env.ContentRootPath + "/config.development.json", true)
                 .Build();
 
             app.UseExceptionHandler("/error.html");
 
             //use the configuration object just like a dictionary.
-            if (configuration.GetValue<bool>("EnableDeveloperExceptions"))
+            if (configuration.GetValue<bool>("FeatureToggles:EnableDeveloperExceptions"))
             {
                 app.UseDeveloperExceptionPage();
             }
 
+            //Generate Error for testing
             app.Use(async (context, next) =>
             {
                 if (context.Request.Path.Value.Contains("invalid"))
