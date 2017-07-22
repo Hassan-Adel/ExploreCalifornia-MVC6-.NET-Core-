@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 
 namespace ExploreCalifornia
 {
@@ -23,9 +24,15 @@ namespace ExploreCalifornia
         {
             loggerFactory.AddConsole();
 
+            // telling ASP.NET Core's configuration library about the various places that the application's configuration settings will be stored. 
+            var configuration = new ConfigurationBuilder()
+                .AddEnvironmentVariables()
+                .Build();
+
             app.UseExceptionHandler("/error.html");
 
-            if (env.IsDevelopment())
+            //use the configuration object just like a dictionary.
+            if (configuration.GetValue<bool>("EnableDeveloperExceptions"))
             {
                 app.UseDeveloperExceptionPage();
             }
