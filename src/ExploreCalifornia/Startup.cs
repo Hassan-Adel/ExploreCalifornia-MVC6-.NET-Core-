@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using ExploreCalifornia.Services;
+using ExploreCalifornia.Models;
 
 namespace ExploreCalifornia
 {
@@ -39,6 +40,8 @@ namespace ExploreCalifornia
             });
 
             services.AddSingleton<FormattingService>();
+
+            services.AddTransient<SpecialDataContext>();
 
             services.AddMvc();
         }

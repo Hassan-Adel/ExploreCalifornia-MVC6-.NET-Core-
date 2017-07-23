@@ -1,0 +1,14 @@
+﻿@model IEnumerable<ExploreCalifornia.Models.Special>
+@*
+    the best use of a view component is to have it retrieve its own data so that 
+    views can render it without having to know or care where that data comes from
+*@
+<h1>Monthly Specials</h1>
+@foreach (var special in Model)
+{
+    <h2 class="top"><img src="/images/@(special.Key)_bug.gif" alt="@special.Name" width="75" height="75">@special.Name</h2>
+    <p>
+        @special.Type <br>
+        <a href="/tours/tour_detail_cycle.htm">@special.Price</a>
+    </p>
+}
