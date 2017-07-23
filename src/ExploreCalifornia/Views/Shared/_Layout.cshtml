@@ -80,18 +80,25 @@
   <section id="mainContent">
     @RenderBody()
   </section>
-    <aside id="secondaryContent">
-        <div id="specials" class="callOut">
-            @*@await Component.InvokeAsync("MonthlySpecials")*@
-            @*wrapped call in parethesis so Razor doesn't confuse the Generic parameter with the HTML tag *@
-            @await (Component.InvokeAsync<ExploreCalifornia.ViewComponents.MonthlySpecialsViewComponent>())
-        </div>
-        <div id="trivia" class="callOut">
-            <h1>Did You Know?</h1>
-            <p>California produces over 17 million gallons of wine each year!</p>
-        </div>
-    </aside>
-  </div>
+      @if (IsSectionDefined("secondaryContent"))
+      {
+          @RenderSection("secondaryContent", false);
+      }
+      else
+      {
+        <aside id="secondaryContent">
+            <div id="specials" class="callOut">
+                @*@await Component.InvokeAsync("MonthlySpecials")*@
+                @*wrapped call in parethesis so Razor doesn't confuse the Generic parameter with the HTML tag *@
+                @await (Component.InvokeAsync<ExploreCalifornia.ViewComponents.MonthlySpecialsViewComponent>())
+            </div>
+            <div id="trivia" class="callOut">
+                <h1>Did You Know?</h1>
+                <p>California produces over 17 million gallons of wine each year!</p>
+            </div>
+        </aside>
+      }
+    </div>
   <footer id="pageFooter">
   <section id="quickLinks">
   <h1>Quick Nav</h1>
