@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using ExploreCalifornia.Models;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -24,14 +25,17 @@ namespace ExploreCalifornia.Controllers
         //------Constrains------
         //When the URL seems like it matches the pattern but doesn't meet these constraints, 
         //MVC does not map it to this controller action and we end up with an empty page
-        [Route("blog/{year:min(2000)}/{month:range(1,12)}/{key}")]
+        [Route("{year:min(2000)}/{month:range(1,12)}/{key}")]
         public IActionResult Post(int year, int month, string key)
         {
-            ViewBag.Title = "";
-            ViewBag.Posted = DateTime.Now;
-            ViewBag.Author = "Hassan Adel";
-            ViewBag.Body = "My First post on this site !!";
-            return View();
+            var post = new Post
+            {
+                Title = "My Post",
+                Posted = DateTime.Now,
+                Author = "Hassan Adel",
+                Body = "My First post on this site !!"
+            };
+            return View(post);
         }
     }
 }
