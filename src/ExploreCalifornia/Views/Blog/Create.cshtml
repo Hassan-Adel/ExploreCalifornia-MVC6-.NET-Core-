@@ -1,0 +1,24 @@
+﻿@model ExploreCalifornia.Models.Post
+@{ 
+    Layout = "_SimpleLayout";
+}
+<h1>Create Blog Post</h1>
+
+<fieldset>
+    @using (Html.BeginForm())
+    {
+        <p>
+            @Html.LabelFor(model =>model.Title)
+            @Html.EditorFor(model => model.Title)
+        </p>
+
+        <p>
+            @Html.LabelFor(model => model.Body)
+            @Html.TextAreaFor(model => model.Title)
+        </p>
+
+        <p>
+            <button type="submit">Create Post</button>
+        </p>
+    }
+</fieldset>
