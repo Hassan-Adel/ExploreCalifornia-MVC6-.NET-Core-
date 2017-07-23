@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
+using ExploreCalifornia.Services;
 
 namespace ExploreCalifornia
 {
@@ -36,6 +37,8 @@ namespace ExploreCalifornia
             services.AddTransient<FeatureToggles>(x => new FeatureToggles{
                 EnableDeveloperExceptions = configuration.GetValue<bool>("FeatureToggles:EnableDeveloperExceptions")
             });
+
+            services.AddSingleton<FormattingService>();
 
             services.AddMvc();
         }
