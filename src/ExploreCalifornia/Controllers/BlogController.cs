@@ -16,9 +16,17 @@ namespace ExploreCalifornia.Controllers
             return View();
         }
 
-        public IActionResult Post(int id = -1)
+        //to customize the URL for this controller action, we'll simply place the route attribute on
+        //top of the action and pass it a string parameter that defines the custom route pattern
+        //to apply to just this action.
+        [Route("blog/{year:min(2000)}/{month:range(1,12)}/{key}")]
+        public IActionResult Post(int year, int month, string key)
         {
-            return new ContentResult { Content = "Your Id is : " + id.ToString() };
+            return new ContentResult
+            {
+                Content = string.Format("Year: {0};  Month: {1};  Key: {2}",
+                                        year, month, key)
+            };
         }
     }
 }
