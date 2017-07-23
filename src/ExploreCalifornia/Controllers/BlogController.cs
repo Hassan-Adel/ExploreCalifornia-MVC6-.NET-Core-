@@ -16,7 +16,31 @@ namespace ExploreCalifornia.Controllers
         [Route("")]
         public IActionResult Index()
         {
-            return View();
+            var posts = new[]
+            {
+                new Post
+            {
+                Title = "My Post 1",
+                Posted = DateTime.Now,
+                Author = "Hassan Adel",
+                Body = "My First post on this site !!"
+            },
+                new Post
+            {
+                Title = "My Post 2",
+                Posted = DateTime.Now,
+                Author = "Hassan Adel",
+                Body = "My First post on this site !!"
+            },
+                new Post
+            {
+                Title = "My Post 3",
+                Posted = DateTime.Now,
+                Author = "Hassan Adel",
+                Body = "My First post on this site !!"
+            }
+            };
+            return View(posts);
         }
 
         //to customize the URL for this controller action, we'll simply place the route attribute on
