@@ -9,7 +9,7 @@ using ExploreCalifornia.Models;
 
 namespace ExploreCalifornia.Api
 {
-    [Route("api/post/{postKey}/comments")]
+    [Route("api/posts/{postKey}/comments")]
     public class CommentsController : Controller
     {
         private readonly BlogDataContext _db;
@@ -23,7 +23,7 @@ namespace ExploreCalifornia.Api
         [HttpGet]
         public IQueryable<Comment> Get(string postKey)
         {
-            return _db.Comments.Where(comment => comment.Post.Key == postKey);
+            return _db.Comments.Where(x => x.Post.Key == postKey);
         }
 
         // GET api/values/5
@@ -39,14 +39,18 @@ namespace ExploreCalifornia.Api
         [HttpPost]
         public Comment Post(string postKey, [FromBody]Comment comment)
         {
-            var Post = _db.Posts.Where(post => post.Key == postKey).FirstOrDefault();
-            if (Post == null)
+            var post = _db.Posts.FirstOrDefault(x => x.Key == postKey);
+
+            if (post == null)
                 return null;
 
-            comment.Post = Post;
+            comment.Post = post;
             comment.Posted = DateTime.Now;
-            _db.Add(comment);
+            comment.Author = User.Identity.Name;
+
+            _db.Comments.Add(comment);
             _db.SaveChanges();
+
             return comment;
         }
 
