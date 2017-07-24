@@ -20,9 +20,35 @@ namespace ExploreCalifornia.Controllers
         }
         // GET: /<controller>/
         [Route("")]
-        public IActionResult Index()
+        public IActionResult Index(int page=0)
         {
-            var posts = _db.Posts.OrderByDescending(x => x.Posted).Take(5).ToArray();
+            var pageSize = 2;
+            var totalPosts = _db.Posts.Count();
+            var totalPages = totalPosts / pageSize;
+            var previousPage = page - 1;
+            var nextPage = page + 1;
+
+            ViewBag.PreviousPage = previousPage;
+            ViewBag.HasPreviousPage = previousPage >= 0;
+            ViewBag.NextPage = nextPage;
+            ViewBag.HasNextPage = nextPage < totalPages;
+
+            var posts =
+                _db.Posts
+                    .OrderByDescending(x => x.Posted)
+                    .Skip(pageSize * page)
+                    .Take(pageSize)
+                    .ToArray();
+            /*
+             *  Jquery adds a special header named X - Requested - With on every single one of its AJAX requests. 
+             *  So all we'll need to do is check to see if that header is there, and then we'll know that it's an AJAX request.
+             *  Then when it is an AJAX request instead of calling the view method, like we're doing now, to return the full view including the layout, 
+             *  we'll instead call the partial view method which will skip the layout and render only the view as a partial view.
+             */
+
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                    return PartialView(posts);
+
             return View(posts);
         }
 
