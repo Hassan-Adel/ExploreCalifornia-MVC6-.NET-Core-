@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using ExploreCalifornia.Services;
 using ExploreCalifornia.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExploreCalifornia
 {
@@ -35,13 +36,21 @@ namespace ExploreCalifornia
              method a function, that returns an instance of type. For example, 
              I can create my own instance of the FeatureToggles class, like this.
              */
-            services.AddTransient<FeatureToggles>(x => new FeatureToggles{
+            services.AddTransient<FeatureToggles>(x => new FeatureToggles {
                 EnableDeveloperExceptions = configuration.GetValue<bool>("FeatureToggles:EnableDeveloperExceptions")
             });
 
             services.AddSingleton<FormattingService>();
 
             services.AddTransient<SpecialDataContext>();
+
+            //These configuration lines build up a Db context options object which Entity Framework 
+            //needs to be able to give to our data context. 
+            services.AddDbContext<BlogDataContext>(options =>
+            {
+                var connectionString = configuration.GetConnectionString("BlogDataContext");
+                options.UseSqlServer(connectionString);
+            });
 
             services.AddMvc();
         }
