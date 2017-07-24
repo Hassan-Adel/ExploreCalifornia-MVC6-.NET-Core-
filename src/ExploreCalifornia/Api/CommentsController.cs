@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ExploreCalifornia.Models;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ExploreCalifornia.Api
 {
+    
     [Route("api/posts/{postKey}/comments")]
     public class CommentsController : Controller
     {
@@ -37,6 +39,7 @@ namespace ExploreCalifornia.Api
         //Visual Studio generated also prefixed the comment parameter with the FromBody attribute. 
         //This attribute tells model binding to only consider the body of the Http request when it's attempting to populate the properties of the parameter.
         // POST api/values
+        [Authorize]
         [HttpPost]
         public Comment Post(string postKey, [FromBody]Comment comment)
         {
@@ -56,6 +59,7 @@ namespace ExploreCalifornia.Api
         }
 
         // PUT api/values/5
+        [Authorize]
         [HttpPut("{id}")]
         public IActionResult Put(long id, [FromBody]Comment updatedComment)
         {
@@ -72,6 +76,7 @@ namespace ExploreCalifornia.Api
         }
 
         // DELETE api/values/5
+        [Authorize]
         [HttpDelete("{id}")]
         public void Delete(long id)
         {
