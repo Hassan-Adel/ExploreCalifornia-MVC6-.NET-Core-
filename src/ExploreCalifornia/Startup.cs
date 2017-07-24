@@ -42,7 +42,7 @@ namespace ExploreCalifornia
 
             services.AddSingleton<FormattingService>();
 
-            services.AddTransient<SpecialDataContext>();
+            
 
             //These configuration lines build up a Db context options object which Entity Framework 
             //needs to be able to give to our data context. 
@@ -52,6 +52,12 @@ namespace ExploreCalifornia
                 options.UseSqlServer(connectionString);
             });
 
+            services.AddDbContext<SpecialsDataContext>(options =>
+            {
+                var connectionString = configuration.GetConnectionString("SpecialsDataContext");
+                options.UseSqlServer(connectionString);
+            });
+            
             services.AddMvc();
         }
 

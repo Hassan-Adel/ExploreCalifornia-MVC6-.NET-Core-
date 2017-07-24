@@ -15,8 +15,8 @@ namespace ExploreCalifornia.ViewComponents
     [ViewComponent]
     public class MonthlySpecialsViewComponent : ViewComponent
     {
-        private readonly SpecialDataContext _specials;
-        public MonthlySpecialsViewComponent(SpecialDataContext specials)
+        private readonly SpecialsDataContext _specials;
+        public MonthlySpecialsViewComponent(SpecialsDataContext specials)
         {
             _specials = specials;
         }
