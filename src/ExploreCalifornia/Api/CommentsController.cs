@@ -28,9 +28,10 @@ namespace ExploreCalifornia.Api
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Comment Get(int id)
         {
-            return "value";
+            var comment = _db.Comments.FirstOrDefault(x => x.Id == id);
+            return comment;
         }
 
         //Visual Studio generated also prefixed the comment parameter with the FromBody attribute. 
@@ -56,14 +57,30 @@ namespace ExploreCalifornia.Api
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public IActionResult Put(long id, [FromBody]Comment updatedComment)
         {
+            var comment = _db.Comments.FirstOrDefault(x => x.Id == id);
+
+            if (comment == null)
+                return NotFound();
+
+            comment.Body = updatedComment.Body;
+
+            _db.SaveChanges();
+
+            return Ok();
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(long id)
         {
+            var comment = _db.Comments.FirstOrDefault(x => x.Id == id);
+            if(comment != null)
+            {
+                _db.Comments.Remove(comment);
+                _db.SaveChanges();
+            }
         }
     }
 }
