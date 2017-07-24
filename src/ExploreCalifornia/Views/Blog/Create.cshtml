@@ -1,17 +1,26 @@
-﻿@model ExploreCalifornia.Models.Post
+﻿@addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
+@model ExploreCalifornia.Models.Post
 @{ 
     Layout = "_SimpleLayout";
 }
 <h1>Create Blog Post</h1>
 
 <fieldset>
-    @using (Html.BeginForm())
-    {
-        @Html.ValidationSummary()
+    <form asp-action="Create" asp-controller="Blog">
+
+        <!--
+            Replace the Html.ValidationSummary helper with the asp-validation-summary tag helper. 
+            Notice that this tag helper requires a property, an enum value which describes which validation errors to include in the summary.
+
+            This value can either be All to display all errors, 
+            ModelOnly to display only high-level errors that are not specific to any property, 
+            or None to suppress all errors and not show any validation messages at all. 
+        -->
+        <div asp-validation-summary="All" class="input-validation-error"></div>
         <p>
-            @Html.LabelFor(model =>model.Title)
-            @Html.EditorFor(model => model.Title)
-            @Html.ValidationMessageFor(model => model.Title)
+            <label asp-for="Title"></label>
+            <input asp-for="Title" class="form-control" placeholder="Blog post title" />
+            <span asp-validation-for="Title"></span>
         </p>
 
         <p>
@@ -23,5 +32,7 @@
         <p>
             <button type="submit">Create Post</button>
         </p>
-    }
+
+    </form>
+
 </fieldset>
