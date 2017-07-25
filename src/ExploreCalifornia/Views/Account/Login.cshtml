@@ -6,8 +6,8 @@
 
     <h1>Login</h1>
     <br />
-    <form role="form" asp-action="Login">
-
+    <form role="form" asp-action="Login" asp-antiforgery="true">
+       @* @Html.AntiForgeryToken(); *@ 
         <div asp-validation-summary="All" class="input-validation-error"></div>
     
         <div class="form-group">

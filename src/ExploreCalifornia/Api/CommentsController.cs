@@ -40,6 +40,7 @@ namespace ExploreCalifornia.Api
         //This attribute tells model binding to only consider the body of the Http request when it's attempting to populate the properties of the parameter.
         // POST api/values
         [Authorize]
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public Comment Post(string postKey, [FromBody]Comment comment)
         {
